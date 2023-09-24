@@ -5,11 +5,16 @@ import string
 import os
 from dotenv import load_dotenv
 import threading
+import json
 
 def random_str(length=10):
     letters = string.ascii_lowercase
     return ''.join(random.choice(letters) for i in range(length))
 
+with open('countries.json', 'r') as file:
+    data = json.load(file)
+
+countries = data['countries']
 load_dotenv()
 success_accs = 0
 domain = os.getenv("DOMAIN")
@@ -37,7 +42,7 @@ def register_account(thread_id):
             "email": f"{random_str(10)}@zenettany.life",
             "password": "",
             "Username": f"{random_str(10)}",
-            "country": "Andorra",
+            "country": random.choice(countries),
             "birthdate": "",
             "game": "dota2",
             "agreement": "false"
@@ -55,7 +60,7 @@ def register_account(thread_id):
 
 threads = []
 
-for i in range(10):
+for i in range(20):
     thread = threading.Thread(target=register_account, args=(i,))
     threads.append(thread)
 

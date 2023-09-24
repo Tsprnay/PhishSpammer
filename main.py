@@ -3,11 +3,13 @@ import re
 import random
 import string
 import os
+from dotenv import load_dotenv
 
 def random_str(length=10):
     letters = string.ascii_lowercase
     return ''.join(random.choice(letters) for i in range(length))
 
+load_dotenv()
 success_accs = 0
 domain = os.getenv("DOMAIN")
 
